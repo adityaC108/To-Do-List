@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+# Testing Guidance
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This document provides comprehensive testing instructions for the To-Do List React application.
 
-## Available Scripts
+##  Manual Testing Checklist
 
-In the project directory, you can run:
+**1. Adding Tasks**
 
-### `npm start`
+   - Valid Task Addition: Enter a task and click "Add" button
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+     - Expected: Task appears at the top of the list
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   - Keyboard Support: Enter a task and press Enter key
 
-### `npm test`
+     - Expected: Task is added without clicking the button
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   - Empty Input Validation: Try to add an empty task
 
-### `npm run build`
+     - Expected: Error message "Please enter a task!" appears
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   - Whitespace Validation: Try to add a task with only spaces
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+     - Expected: Error message appears, task is not added
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   - Duplicate Task Prevention: Try to add the same task twice
 
-### `npm run eject`
+     - Expected: Error message "This task already exists!" appears
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   - Case Insensitive Duplicates: Add "Test" then try "test"
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+     - Expected: Duplicate error message appears
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   - Error Clearing: Start typing after an error appears
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+     - Expected: Error message disappears when you start typing
 
-## Learn More
+**2. Task Management**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   - Mark as Complete: Click the circle next to an active task
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+     - Expected: Circle turns green with checkmark, text gets strikethrough, background becomes light green
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   - Mark as Incomplete: Click the green circle next to a completed task
 
-### Analyzing the Bundle Size
+     - Expected: Circle becomes empty, strikethrough removed, background becomes white
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   - Delete Task: Click the "×" button on any task
 
-### Making a Progressive Web App
+     - Expected: Task is removed from the list immediately
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   - Task Date Display: Check if creation date appears for each task
 
-### Advanced Configuration
+     - Expected: Date is displayed in MM/DD/YYYY format
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**3. Filtering Functionality**
 
-### Deployment
+   - All Tasks Filter: Select "All Tasks" from filter dropdown
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+     - Expected: All tasks (active and completed) are visible
 
-### `npm run build` fails to minify
+   - Active Tasks Filter: Select "Active" from filter dropdown
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+     - Expected: Only incomplete tasks are shown
+
+   - Completed Tasks Filter: Select "Completed" from filter dropdown
+
+     - Expected: Only completed tasks are shown
+
+   - Filter with Empty Results: Select a filter with no matching tasks
+
+     - Expected: Appropriate empty state message appears with relevant emoji
+
+**4. Sorting Functionality**
+
+   - Newest First: Select "Newest First" from sort dropdown
+
+     - Expected: Most recently added tasks appear at the top
+
+   - Oldest First: Select "Oldest First" from sort dropdown
+
+     - Expected: Oldest tasks appear at the top
+
+   - Alphabetical Sort: Select "A-Z" from sort dropdown
+
+     - Expected: Tasks are sorted alphabetically by task text
+
+**5. Combined Filter and Sort**
+
+   - Filter + Sort: Apply both a filter and sort option
+
+     - Expected: Tasks are first filtered, then sorted according to selection
+
+   - Dynamic Updates: Add a new task while filter/sort is active
+
+     - Expected: New task appears in correct position based on current filter/sort
+
+**6. User Interface Testing**
+
+   - Responsive Design: Test on different screen sizes
+
+     - Expected: Layout adapts properly, no horizontal scrolling
+
+   - Button Hover Effects: Hover over Add and Remove buttons
+
+     - Expected: Background color changes on hover
+
+   - Input Focus: Click on the input field
+
+     - Expected: Input field gets focus, border color may change
+
+   - Empty State Messages: Remove all tasks or use filters with no results
+
+     - Expected: Appropriate empty state message with emoji appears
+
+## Edge Cases to Test
+
+**1. Input Validation Edge Cases**
+
+   - Very long task names (100+ characters)
+   - Task names with special characters (!@#$%^&*)
+   - Task names with only numbers
+   - Task names with emojis
+   - Copy-paste very long text
+
+**2. UI Edge Cases**
+
+   - Rapidly clicking Add button multiple times
+   - Rapidly toggling task completion
+   - Switching filters/sorts rapidly
+   - Adding many tasks (20+) to test scrolling
+
+**3. Browser Compatibility**
+
+   - Test in Chrome
+   - Test in Firefox
+   - Test in Safari
+   - Test in Edge
